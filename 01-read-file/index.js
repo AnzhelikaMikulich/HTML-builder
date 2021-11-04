@@ -4,10 +4,7 @@ const path = require('path');
 
 let stream = fs.createReadStream('./01-read-file/text.txt')
 
-setTimeout(
-  () =>
-    stream.on('data', (data) =>
-      console.log(data.toString())
-    ),
-  1000
-) ;
+stream.on("data", function(data) {
+  let chunk = data.toString();
+  console.log(chunk);
+}); 
