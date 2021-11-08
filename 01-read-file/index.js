@@ -1,10 +1,10 @@
 const fs = require("fs");
 
-const path = require('path');
+const path = require("path");
 
-let stream = fs.createReadStream('./01-read-file/text.txt')
+let stream = fs.createReadStream("./01-read-file/text.txt");
 
-stream.on("data", function(data) {
+stream.on("data", function (data) {
   let chunk = data.toString();
   console.log(chunk);
-}); 
+});
