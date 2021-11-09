@@ -21,7 +21,7 @@ fs.access(folderNameCopy, (err) => {
       .then((res) =>
         promis.mkdir(folderNameCopy, { recursive: true, force: true })//создать новую
       )
-      .then((promis) => console.log('Спасибо за проверку!Это последнее задание этого таска,по моей оценке получилось 80 баллов,если есть ошибки-напишите мне пожалуйста'))
+      .then((promis) => console.log(2))
       .then((result) =>
         promis.readdir(folderName, { withFileTypes: true }).then((result) =>
           // console.log(result)
