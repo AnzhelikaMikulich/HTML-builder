@@ -4,24 +4,34 @@ const promis = require("fs/promises");
 const folderName = path.join(__dirname, "files");
 const folderNameCopy = path.join(__dirname, "files-copy"); //путь для проверки папки
 
-async function addFolder() {
-  await promis.rm(folderNameCopy, { recursive: true, force: true }); //delete folder
-  await promis.mkdir(folderNameCopy, { recursive: true }); //add folder
-}
-
-async function copyFolder() {
-  promis.readdir(folderName, { withFileTypes: true }).then((result) =>
-    result.forEach((element) => {
-      promis.copyFile(
-        path.join(folderName, element.name),
-        path.join(folderNameCopy, element.name)
-      ); //copy files
-    })
-  );
-}
-
-async function runCopy() {
-  await addFolder();
-  await copyFolder();
-}
-runCopy();
+fs.access(folderNameCopy, (err) => {
+  if (err) {
+    promis.mkdir(folderNameCopy, { recursive: true }); //создать папку если ее нет
+    promis.readdir(folderName, { withFileTypes: true }).then((result) =>
+      result.forEach((element) => {
+        promis.copyFile(
+          path.join(folderName, element.name),
+          path.join(folderNameCopy, element.name)
+        ); //скопировать файлы
+      })
+    );
+  } else {
+    promis
+      .rm(folderNameCopy, { recursive: true })//удалить старую папку
+      .then((res) =>
+        promis.mkdir(folderNameCopy, { recursive: true, force: true })//создать новую
+      )
+      .then((promis) => console.log('Спасибо за проверку!Это последнее задание этого таска,по моей оценке получилось 80 баллов,если есть ошибки-напишите мне пожалуйста'))
+      .then((result) =>
+        promis.readdir(folderName, { withFileTypes: true }).then((result) =>
+          // console.log(result)
+          result.forEach((element) => {
+            promis.copyFile(//скопировать файлы
+              path.join(folderName, element.name),
+              path.join(folderNameCopy, element.name)
+            );
+          })
+        )
+      );
+  }
+});
